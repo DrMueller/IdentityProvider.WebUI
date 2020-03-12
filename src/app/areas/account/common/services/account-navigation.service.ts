@@ -7,11 +7,15 @@ import { Router } from '@angular/router';
 export class AccountNavigationService {
   public constructor(private router: Router) { }
 
-  public navigateToCreateAccount() {
+  public navigateToAccountInfo(): void {
+    this.router.navigate(['account', 'info']);
+  }
+
+  public navigateToCreateAccount(): void {
     this.router.navigate(['account', 'create']);
   }
 
-  public navigateToLogin() {
+  public navigateToLogin(): void {
     this.router.navigate(['account', 'login']);
   }
 }

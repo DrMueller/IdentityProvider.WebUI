@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IdentityErrorHttpService } from './http/identity-error-http.service';
-import { IdentityError } from '../models';
+import { IdentityError, IdentityErrorRequest } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,8 @@ export class IdentityErrorsDataService {
   public constructor(private http: IdentityErrorHttpService) { }
 
   public fetchErrorAsync(errorId: string): Promise<IdentityError> {
-    return this.http.get$<IdentityError>(errorId).toPromise();
+    const request = new IdentityErrorRequest();
+    request.errorId = errorId;
+    return this.http.post$<IdentityError>('', request).toPromise();
   }
 }

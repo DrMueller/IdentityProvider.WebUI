@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { AccountHttpService } from '../../../common/services';
 
 @Component({
@@ -7,12 +8,29 @@ import { AccountHttpService } from '../../../common/services';
   styleUrls: ['./account-info.component.scss']
 })
 export class AccountInfoComponent implements OnInit {
-  public userInfo = '';
-  constructor(private http: AccountHttpService) { }
+  public userProperties: string[] = [];
+  public constructor(
+    private http: AccountHttpService,
+    private oicd: OidcSecurityService) { }
 
   ngOnInit(): void {
-    this.http.get$<string>('UserInfo').subscribe(sr => {
-      this.userInfo = sr;
+    this.oicd.getUserData().subscribe(data => {
+      this.userProperties = [];
+      const props = Object.getOwnPropertyNames(data);
+
+      if (!data) {
+        this.userProperties.push('No data');
+      } else {
+        props.forEach(prop => {
+          this.userProperties.push(prop + ': ' + data[prop]);
+        });
+      }
+    });
+
+
+    this.http.get$('UserInfo').subscribe(sr => {
+      debugger;
+      console.log(sr);
     });
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AccountHttpService } from '../../common/services';
 import { LoginRequest, LoginResult } from '../models';
-import { HttpClient } from '@angular/common/http';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 
 @Injectable({
@@ -10,13 +10,11 @@ import { HttpClient } from '@angular/common/http';
 export class LoginService {
   constructor(
     private http: AccountHttpService,
-    private httpClient: HttpClient) { }
+    private oidc: OidcSecurityService) { }
 
   public logIn(request: LoginRequest): void {
     this.http.post$<LoginResult>('Login', request).subscribe(() => {
-      this.httpClient.get(request.returnUrl).subscribe(sr2 => {
-        console.log(sr2);
-      });
+      this.oidc.authorize();
     });
   }
 }
