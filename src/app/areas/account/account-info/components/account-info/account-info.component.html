@@ -1,3 +1,7 @@
+<p>
+  Is user authorized: {{ isAuthorized$ | async }}
+</p>
+
 <ul>
   <li *ngFor="let prop of userProperties">
     {{ prop }}

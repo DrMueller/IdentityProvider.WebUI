@@ -1,0 +1,10 @@
+<div *ngIf="hasConsents">
+  <h2>{{consentsDescription}}</h2>
+
+  <div class="consent-list-container">
+    <div class="consent-list-content" *ngFor="let scope of scopeConsents;  let i = index">
+      <app-scope-consent [formGroup]="formGroup" [control]="formArray.controls[i]" [scopeConsent]="scope">
+      </app-scope-consent>
+    </div>
+  </div>
+</div>

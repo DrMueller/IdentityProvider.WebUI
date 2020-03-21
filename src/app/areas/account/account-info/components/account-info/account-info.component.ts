@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { AccountHttpService } from '../../../common/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account-info',
@@ -9,11 +9,16 @@ import { AccountHttpService } from '../../../common/services';
 })
 export class AccountInfoComponent implements OnInit {
   public userProperties: string[] = [];
+
+  public get isAuthorized$(): Observable<boolean> {
+    return this.oicd.getIsAuthorized();
+  }
+
   public constructor(
-    private http: AccountHttpService,
     private oicd: OidcSecurityService) { }
 
   ngOnInit(): void {
+    debugger;
     this.oicd.getUserData().subscribe(data => {
       this.userProperties = [];
       const props = Object.getOwnPropertyNames(data);
@@ -25,12 +30,6 @@ export class AccountInfoComponent implements OnInit {
           this.userProperties.push(prop + ': ' + data[prop]);
         });
       }
-    });
-
-
-    this.http.get$('UserInfo').subscribe(sr => {
-      debugger;
-      console.log(sr);
     });
   }
 }

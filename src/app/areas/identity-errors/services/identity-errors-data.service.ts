@@ -6,7 +6,6 @@ import { IdentityError, IdentityErrorRequest } from '../models';
   providedIn: 'root'
 })
 export class IdentityErrorsDataService {
-
   public constructor(private http: IdentityErrorHttpService) { }
 
   public fetchErrorAsync(errorId: string): Promise<IdentityError> {

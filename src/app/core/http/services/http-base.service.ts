@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,9 +19,17 @@ export abstract class HttpBaseService {
     return this.httpClient.delete<T>(completeUrl, requestOptions);
   }
 
-  public get$<T>(relativeUrl?: string | number): Observable<T> {
+  public get$<T>(
+    relativeUrl?: string | number,
+    params?: HttpParams): Observable<T> {
     const completeUrl = this.createCompleteUrl(relativeUrl);
-    const requestOptions = this.createOptions();
+    let requestOptions = this.createOptions();
+
+    if (params) {
+      requestOptions = Object.assign(requestOptions, {
+        params
+      });
+    }
 
     return this.httpClient.get<T>(completeUrl, requestOptions);
   }

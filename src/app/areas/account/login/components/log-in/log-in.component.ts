@@ -6,6 +6,9 @@ import { LogInFormBuilderService, LoginService } from '../../services';
 import { LoginRequest } from '../../models';
 import { AccountNavigationService } from '../../../common/services/account-navigation.service';
 import { ActivatedRoute } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-log-in',
@@ -13,10 +16,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./log-in.component.scss']
 })
 export class LogInComponent implements OnInit {
-  public get canLogIn(): boolean {
-    return !this.formGroup.invalid && !this.isLoggingIn;
-  }
-
   public formGroup: FormGroup;
   public isLoggingIn = false;
 
@@ -25,7 +24,12 @@ export class LogInComponent implements OnInit {
     private formGroupBinder: RxFormGroupBindingService,
     private formBuilder: LogInFormBuilderService,
     private loginService: LoginService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private oidc: OidcSecurityService) { }
+
+  public get canLogIn(): boolean {
+    return !this.formGroup.invalid && !this.isLoggingIn;
+  }
 
   public createAccount(): void {
     this.navigator.navigateToCreateAccount();
@@ -37,13 +41,27 @@ export class LogInComponent implements OnInit {
 
     this.formGroupBinder.bindToModel(this.formGroup, request);
     this.route.queryParamMap.subscribe(sr => {
-      const returnUrl = sr.get('ReturnUrl') ?? '';
+      const returnUrl = sr.get('ReturnUrl')!;
       request.returnUrl = returnUrl;
+
       this.loginService.logIn(request);
     });
   }
 
+  public get loginErrorMessage$(): Observable<string> {
+    return this.loginService.loginResult$.pipe(
+      map(lr => lr.errorMessage)
+    );
+  }
+
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.buildFormGroup();
+
+    this.loginService.loginResult$.subscribe(res => {
+      this.isLoggingIn = false;
+      if (res.wasSuccess) {
+        this.oidc.authorize();
+      }
+    });
   }
 }

@@ -4,6 +4,7 @@ import { EntryPointComponent } from './entry-point/entry-point';
 import { LogInComponent } from './login/components/log-in';
 import { AccountCreationComponent } from './create/components/account-creation/account-creation.component';
 import { AccountInfoComponent } from './account-info/components/account-info';
+import { ConsentComponent } from './consent/components/consent/consent.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'info',
         component: AccountInfoComponent
+      },
+      {
+        path: 'consent',
+        component: ConsentComponent
       }
     ]
   }

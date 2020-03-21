@@ -1,0 +1,20 @@
+<mat-card>
+  <div [formGroup]="formGroup">
+    <mat-checkbox [formControl]="control">
+      <strong>{{ scopeConsent.displayName }}</strong>
+      <span *ngIf="scopeConsent.emphasize">
+        <mat-icon class="consent-emphasize-icon" color="accent">notification_important</mat-icon>
+      </span>
+    </mat-checkbox>
+
+    <span class="consent-required" *ngIf="scopeConsent.isRequired">
+      (required)
+    </span>
+
+    <div class="consent-description">
+      <p *ngIf="scopeConsent.description">
+        {{ scopeConsent.description }}
+      </p>
+    </div>
+  </div>
+</mat-card>
