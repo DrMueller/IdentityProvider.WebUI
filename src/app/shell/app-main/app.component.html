@@ -1,10 +1,19 @@
-<app-app-navigation class="main-container">
-  <main>
-    <div *ngIf="showLoadingIndicator$ | async">
-      <mat-progress-bar class="toolbar-loading" mode="indeterminate" color="warn">
-      </mat-progress-bar>
+<mat-toolbar color="primary">
+  <div class="toolbar-container">
+    <div>
+      <label>DrMuellers little Identity Provider</label>
     </div>
-    <router-outlet>
-    </router-outlet>
-  </main>
-</app-app-navigation>
+    <div>
+      <small>Version: {{versionDescription}}</small>
+    </div>
+  </div>
+</mat-toolbar>
+
+<main>
+  <div *ngIf="showLoadingIndicator$ | async">
+    <mat-progress-bar class="toolbar-loading" mode="indeterminate" color="warn">
+    </mat-progress-bar>
+  </div>
+  <router-outlet>
+  </router-outlet>
+</main>

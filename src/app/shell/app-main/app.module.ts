@@ -8,12 +8,11 @@ import { BusyIndicationModule } from 'src/app/shared/busy-indication/busy-indica
 import { RxFormsModule } from 'src/app/shared/rx-forms';
 
 import { AppInitService } from '../app-init/services';
-import { AppNavigationModule } from '../app-navigation/app-navigation.module';
 import { ErrorHandlingModule } from '../error-handling';
-import { AuthModule } from 'angular-auth-oidc-client';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SecurityModule } from '../security';
 
 export function initializeApp(appInitService: AppInitService) {
   return () => appInitService.initializeAppAsync();
@@ -24,7 +23,6 @@ export function initializeApp(appInitService: AppInitService) {
     AppComponent
   ],
   imports: [
-    AppNavigationModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,7 +32,7 @@ export function initializeApp(appInitService: AppInitService) {
     HttpClientModule,
     MatDependenciesModule.forRoot(),
     RxFormsModule.forRoot(),
-    AuthModule.forRoot()
+    SecurityModule
   ],
   providers: [
     {

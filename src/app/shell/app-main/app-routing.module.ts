@@ -13,11 +13,15 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    loadChildren: () => import('../../areas/account/account.module').then(m => m.AccountModule)
+    loadChildren: () => import('../../areas/account-creation/account.module').then(m => m.AccountModule)
   },
   {
     path: 'identity-errors',
     loadChildren: () => import('../../areas/identity-errors/identity-errors.module').then(m => m.IdentityErrorsModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('../../areas/auth-workflow/auth-workflow.module').then(m => m.AuthWorkflowModule)
   }
 ];
 

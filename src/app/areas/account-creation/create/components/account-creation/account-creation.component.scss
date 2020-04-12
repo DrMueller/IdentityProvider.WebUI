@@ -1,0 +1,19 @@
+@import "src/styles.scss";
+
+.account-creation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-creation-content {
+  width: 100%;
+  text-align: center;
+}
+
+.account-creation-error-info {
+  margin-bottom: 15px;
+  color: $warn;
+  list-style: none;
+  list-style-type: none;
+}
